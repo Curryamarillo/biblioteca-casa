@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +17,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 
 @Data
 @Builder
@@ -32,16 +34,18 @@ public class User implements UserDetails {
   private String lastname;
   private String email;
   private String password;
-
+  @Builder.Default
   @Enumerated(EnumType.STRING)
-  private Role role;
-
+  private Role role = Role.USER;
   @OneToMany(mappedBy = "user")
   private List<Token> tokens;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return role.getAuthorities();
+    if (role != null) {
+      return role.getAuthorities();
+    }
+    return Collections.emptyList();
   }
 
   @Override

@@ -28,6 +28,11 @@ public class AuthenticationController {
   public ResponseEntity<AuthenticationResponse> authenticate(
       @RequestBody AuthenticationRequest request
   ) {
+    try { AuthenticationResponse response = service.authenticate(request);
+      return ResponseEntity.ok(response);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     return ResponseEntity.ok(service.authenticate(request));
   }
 
