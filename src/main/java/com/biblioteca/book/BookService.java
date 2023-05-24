@@ -22,4 +22,8 @@ public interface BookService {
     void deleteById(Long id);
 
     void deleteAll();
+
+    List<Book> findByLentTo(String lentTo);
+
+
 }

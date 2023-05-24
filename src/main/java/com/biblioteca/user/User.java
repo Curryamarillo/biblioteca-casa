@@ -1,13 +1,9 @@
 package com.biblioteca.user;
 
+import com.biblioteca.book.Book;
 import com.biblioteca.token.Token;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +25,7 @@ public class User implements UserDetails {
 
   @Id
   @GeneratedValue
-  private Integer id;
+  private Integer id_usuario;
   private String firstname;
   private String lastname;
   private String email;
@@ -39,6 +35,8 @@ public class User implements UserDetails {
   private Role role = Role.USER;
   @OneToMany(mappedBy = "user")
   private List<Token> tokens;
+  @OneToOne(mappedBy = "lentTo")
+  private Book borrowedBook;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

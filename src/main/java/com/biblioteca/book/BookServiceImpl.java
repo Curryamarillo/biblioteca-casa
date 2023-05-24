@@ -36,12 +36,14 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public Book update(Book book) {
-        Book existingBook = this.bookRepository.findById(book.getId()).orElse(null);
+        Book existingBook = this.bookRepository.findById(book.getIdBook()).orElse(null);
         if(existingBook != null){
             existingBook.setName(book.getName());
             existingBook.setAuthor(book.getAuthor());
             existingBook.setEditorial(book.getEditorial());
             existingBook.setIsbn(book.getIsbn());
+            existingBook.setImagePath(book.getImagePath());
+            existingBook.setLentTo(book.getLentTo());
             return this.bookRepository.save(existingBook);
         }
         return null;
@@ -56,5 +58,10 @@ public class BookServiceImpl implements BookService{
     @Override
     public void deleteAll() {
 
+    }
+
+    @Override
+    public List<Book> findByLentTo(String lentTo) {
+        return this.bookRepository.findByLentTo(lentTo);
     }
 }

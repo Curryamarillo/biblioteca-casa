@@ -1,5 +1,6 @@
 package com.biblioteca.book;
 
+import com.biblioteca.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +15,7 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idBook;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
@@ -23,5 +24,8 @@ public class Book {
     private String editorial;
     @Column(nullable = false, unique = true)
     private String isbn;
-
+    private String imagePath;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User lentTo;
 }
