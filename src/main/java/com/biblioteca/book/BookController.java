@@ -1,5 +1,6 @@
 package com.biblioteca.book;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,14 +13,17 @@ import java.util.Optional;
 public class BookController {
 
     private BookService bookService;
-
+    @Autowired
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
 
     @GetMapping
-    public List<Book> getAllBooks() {
-        return bookService.findAll();
+    public BookListDTO getAllBooks() {
+        List<Book> books = bookService.findAll();
+        BookListDTO bookListDTO = new BookListDTO();
+        bookListDTO.setBooks(books);
+        return bookListDTO  ;
     }
 
     @GetMapping("/{id}")
